@@ -1,0 +1,15 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="content-heading"><div><p class="eyebrow">DIRECTORY</p><h1>{{ page_title }}</h1><p class="text-secondary">Search and manage college records.</p></div>{% if request.user.is_superuser or request.user.role == "ADMIN" %}<a class="btn btn-primary" href="{% url create_url %}"><i class="bi bi-plus-lg me-2"></i>{{ create_label }}</a>{% endif %}</div>
+<div class="panel">
+  <form class="filter-row" method="get"><div class="search-box"><i class="bi bi-search"></i><input name="q" value="{{ search_query }}" placeholder="Search by name, ID, or email..."></div>
+    {% if departments %}<select class="form-select filter-select" name="department"><option value="">All departments</option>{% for department in departments %}<option value="{{ department.id }}" {% if request.GET.department == department.id|stringformat:"s" %}selected{% endif %}>{{ department.name }}</option>{% endfor %}</select>{% endif %}
+    <select class="form-select filter-select" name="year"><option value="">All years</option>{% for year in "12345678" %}<option value="{{ year }}" {% if request.GET.year == year %}selected{% endif %}>Year {{ year }}</option>{% endfor %}</select><button class="btn btn-outline-secondary" type="submit">Filter</button>
+  </form>
+  <div class="table-responsive"><table class="table align-middle data-table"><thead><tr><th>Student</th><th>Department</th><th>Course</th><th>Year</th><th>Contact</th><th class="text-end">Actions</th></tr></thead><tbody>
+  {% for student in students %}<tr><td><a class="person-cell" href="{% url 'students:detail' student.pk %}"><span class="avatar avatar-table">{{ student.first_name|slice:":1" }}{{ student.last_name|slice:":1" }}</span><span><strong>{{ student.full_name }}</strong><small>{{ student.student_id }}</small></span></a></td><td>{{ student.department.name }}</td><td>{{ student.course.name }}</td><td><span class="status-pill">Year {{ student.year }}</span></td><td>{{ student.email }}</td><td class="text-end">{% if request.user.is_superuser or request.user.role == "ADMIN" %}<a class="icon-action" href="{% url 'students:edit' student.pk %}" title="Edit"><i class="bi bi-pencil"></i></a><a class="icon-action text-danger" href="{% url 'students:delete' student.pk %}" title="Delete"><i class="bi bi-trash"></i></a>{% endif %}<a class="icon-action" href="{% url 'students:detail' student.pk %}" title="View"><i class="bi bi-arrow-up-right"></i></a></td></tr>
+  {% empty %}<tr><td colspan="6" class="empty-state">No student records found. Add a student to get started.</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% include "shared/pagination.html" %}
+</div>
+{% endblock %}

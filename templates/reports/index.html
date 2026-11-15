@@ -1,0 +1,9 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="content-heading"><div><p class="eyebrow">DATA & EXPORTS</p><h1>Reports</h1><p class="text-secondary">Download structured college data for analysis and records.</p></div></div>
+<div class="row g-3">
+<div class="col-md-4"><div class="panel report-card"><span class="report-icon violet"><i class="bi bi-people"></i></span><h2 class="panel-title mt-3">Student directory</h2><p class="text-secondary">Enrollment, contact, department, and course records.</p><a class="btn btn-outline-primary" href="{% url 'reports:export' 'students' 'xlsx' %}"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Excel</a><a class="btn btn-light ms-1" href="{% url 'reports:export' 'students' 'pdf' %}">PDF</a></div></div>
+<div class="col-md-4"><div class="panel report-card"><span class="report-icon green"><i class="bi bi-check2-square"></i></span><h2 class="panel-title mt-3">Attendance report</h2><p class="text-secondary">Date-wise attendance entries and status for assigned subjects.</p><a class="btn btn-outline-primary" href="{% url 'reports:export' 'attendance' 'xlsx' %}"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Excel</a><a class="btn btn-light ms-1" href="{% url 'reports:export' 'attendance' 'pdf' %}">PDF</a></div></div>
+<div class="col-md-4"><div class="panel report-card"><span class="report-icon amber"><i class="bi bi-award"></i></span><h2 class="panel-title mt-3">Academic performance</h2><p class="text-secondary">Student subject scores, semesters, and calculated grades.</p><a class="btn btn-outline-primary" href="{% url 'reports:export' 'marks' 'xlsx' %}"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Excel</a><a class="btn btn-light ms-1" href="{% url 'reports:export' 'marks' 'pdf' %}">PDF</a></div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="content-heading"><div><p class="eyebrow">TRENDS & INSIGHTS</p><h1>Attendance analytics</h1><p class="text-secondary">Monthly attendance status across recorded sessions.</p></div></div>
+<div class="panel chart-panel"><div class="panel-header"><div><h2 class="panel-title">Attendance by month</h2><p class="text-secondary small mb-0">Recorded sessions, grouped by calendar month</p></div></div><div class="chart-container chart-tall"><canvas id="attendanceChart"></canvas></div></div>
+{{ monthly_labels|json_script:"monthly-labels" }}{{ monthly_present|json_script:"monthly-present" }}{{ monthly_absent|json_script:"monthly-absent" }}{{ monthly_leave|json_script:"monthly-leave" }}
+{% endblock %}
+{% block scripts %}<script>
+const labels = JSON.parse(document.getElementById("monthly-labels").textContent);
+new Chart(document.getElementById("attendanceChart"), {type:"bar",data:{labels,datasets:[
+{label:"Present",data:JSON.parse(document.getElementById("monthly-present").textContent),backgroundColor:"#38a982",borderRadius:5},
+{label:"Absent",data:JSON.parse(document.getElementById("monthly-absent").textContent),backgroundColor:"#eb7180",borderRadius:5},
+{label:"Leave",data:JSON.parse(document.getElementById("monthly-leave").textContent),backgroundColor:"#f1b94c",borderRadius:5}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{precision:0}}},plugins:{legend:{position:"bottom"}}}});
+</script>{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="content-heading"><div><p class="eyebrow">CONFIRM ACTION</p><h1>Delete record</h1></div></div>
+<div class="panel confirm-panel"><div class="confirm-icon"><i class="bi bi-exclamation-triangle"></i></div><h2 class="h5">Are you sure?</h2><p class="text-secondary">This will permanently delete <strong>{{ object }}</strong>{% if object.user %} and the associated login account{% endif %}. Related records may also be affected.</p><form method="post">{% csrf_token %}<a class="btn btn-light" href="javascript:history.back()">Cancel</a><button class="btn btn-danger ms-2" type="submit">Delete permanently</button></form></div>
+{% endblock %}

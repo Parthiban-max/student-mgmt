@@ -1,0 +1,7 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="content-heading"><div><p class="eyebrow">ACADEMIC STRUCTURE</p><h1>{{ page_title }}</h1><p class="text-secondary">Maintain the institution's {{ page_title|lower }} records.</p></div>{% if create_url and request.user.role != "FACULTY" %}<a class="btn btn-primary" href="{% url create_url %}"><i class="bi bi-plus-lg me-2"></i>Add {{ page_title|lower|slice:":-1" }}</a>{% endif %}</div>
+<div class="panel"><div class="table-responsive"><table class="table align-middle data-table"><thead><tr>{% for column in columns %}<th>{{ column }}</th>{% endfor %}<th class="text-end">Actions</th></tr></thead><tbody>
+{% for row in rows %}<tr>{% for value in row.values %}<td>{{ value }}</td>{% endfor %}<td class="text-end">{% if edit_route %}<a class="icon-action" href="{% url edit_route row.id %}" title="Edit"><i class="bi bi-pencil"></i></a><a class="icon-action text-danger" href="{% url delete_route row.id %}" title="Delete"><i class="bi bi-trash"></i></a>{% endif %}</td></tr>{% empty %}<tr><td class="empty-state" colspan="8">No {{ page_title|lower }} found yet.</td></tr>{% endfor %}
+</tbody></table></div>{% include "shared/pagination.html" %}</div>
+{% endblock %}

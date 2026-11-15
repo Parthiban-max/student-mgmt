@@ -1,0 +1,20 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="content-heading"><div><p class="eyebrow">RECORD MANAGEMENT</p><h1>{{ page_title }}</h1><p class="text-secondary">Enter the details below. Fields marked required must be completed.</p></div></div>
+<div class="panel form-panel">
+  <form method="post" novalidate>{% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="row g-3">
+      {% for field in form %}
+        <div class="{% if field.name == 'address' or field.name == 'description' %}col-12{% else %}col-md-6{% endif %}">
+          <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="text-danger"> *</span>{% endif %}</label>
+          {{ field }}
+          {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+          {% for error in field.errors %}<div class="small text-danger mt-1">{{ error }}</div>{% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="form-actions"><a class="btn btn-light" href="javascript:history.back()">Cancel</a><button type="submit" class="btn btn-primary px-4">Save changes</button></div>
+  </form>
+</div>
+{% endblock %}

@@ -143,3 +143,5 @@ Open `http://127.0.0.1:8000/` and sign in. The dashboard links to student, facul
 Each module is available from the authenticated sidebar. Verify the integrated modules with `python manage.py test`; the suite covers roles, records, dashboard rendering, and both export formats.
 
 All write forms use Django model/form validation and CSRF tokens. Use the Django test suite after changes to validate database and access-control behavior.
+#   s t u d e n t - m g m t  
+ 
